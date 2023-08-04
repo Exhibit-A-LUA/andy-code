@@ -7,6 +7,37 @@ let score = JSON.parse(localStorage.getItem('score')) ||
 
 updateScoreElement();
 
+document.querySelector('.js-rock-button')
+  .addEventListener('click', () => {
+    playGame('rock');
+  })
+
+document.querySelector('.js-paper-button')
+  .addEventListener('click', () => {
+    playGame('paper');
+  })
+
+document.querySelector('.js-scissors-button')
+  .addEventListener('click', () => {
+    playGame('scissors');
+  })
+
+document.querySelector('.js-reset-score-button')
+  .addEventListener('click', () => {
+    resetScore();
+  })
+
+document.querySelector('.js-auto-play-button')
+  .addEventListener('click', () => {
+    autoPlay();
+  })
+
+
+
+
+
+
+
 function resetScore(){
   score.wins = 0;
   score.losses = 0;
@@ -15,6 +46,26 @@ function resetScore(){
   updateScoreElement();
   
 }
+
+let isAutoPlaying = false;
+let intervalId
+
+function autoPlay() {
+  if (!isAutoPlaying) {
+    // intervalId = setInterval(function() {
+    // reccomended to use arrow function when passing function into function
+      intervalId = setInterval(() => {
+      const playerMove = pickComputerMove();
+      playGame(playerMove);
+    }, 1000)
+    isAutoPlaying = true;
+  } else {
+    clearInterval(intervalId);
+    isAutoPlaying = false;
+  }
+}
+
+
 
 function playGame(playerMove){
   const computerMove = pickComputerMove();
